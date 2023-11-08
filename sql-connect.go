@@ -5,14 +5,24 @@ import (
 	"log"
 	"database/sql"
 	"time"
+	"os"
+	// "math/rand"
 
 	_ "github.com/go-sql-driver/mysql"
+	"github.com/joho/godotenv"
 )
 
-func SqlConnect (id uint64) []string {
-	var results []string
+func SqlConnect (id uint64) (string, string) {
+	var randomUwu string
+	var artistLink string
 
-	db, err := sql.Open("mysql", "cat:uwu@tcp(34.32.9.223:3306)/uwu")
+	err := godotenv.Load()
+	if err != nil {
+	  log.Fatal("Error loading .env file")
+	}
+	sqlToken := os.Getenv("SQL_TOKEN")
+
+	db, err := sql.Open("mysql", sqlToken)
 	if err != nil {
 		panic(err)
 	}
@@ -21,27 +31,54 @@ func SqlConnect (id uint64) []string {
 	db.SetMaxOpenConns(10)
 	db.SetMaxIdleConns(10)
 
-	rows, err := db.Query("SELECT imageLink FROM uwuDerivatives WHERE uwucrewId =  ?", id)
+
+
+	rows1, err := db.Query("SELECT imageLink, socialMedia FROM uwuDerivatives WHERE uwucrewId =  ? ORDER BY RAND()", id)
 	if err != nil {
 		panic(err)
 	}
 
-	if rows.Next() {
-		for rows.Next() {
+	if rows1.Next() {
+		for rows1.Next() {
+			var column1Value string
 			var column2Value string
-			err := rows.Scan(&column2Value)
+			err := rows1.Scan(&column1Value, &column2Value)
 			if err != nil {
 				panic(err)
 			}
-			results = append(results, column2Value)
-
-			err = rows.Close()
-			if err != nil {
-				log.Fatal(err)
-			}
+			randomUwu = column1Value
+			artistLink = column2Value
 		}
+
+		// rand.Seed(time.Now().UnixNano())	
+
+		// randomIndex := rand.Intn(len(results))
+		// randomUwuPic := results[randomIndex]
+
+		// rows2, err := db.Query("SELECT socialMedia FROM uwuDerivatives WHERE imageLink = ?", randomUwuPic)
+		// if err != nil {
+		// 	panic(err)
+		// }
+
+		// artist = rows 
+
+		// for rows2.Next() {
+		// 	var column2Value string
+		// 	err := rows1.Scan(&column2Value)
+		// 	if err != nil {
+		// 		panic(err)
+		// 	}
+		// 	results = append(results, column2Value)
+		// }
+
 	} else {
-		results = append(results, "no ID found")
+		randomUwu = "no ID found"
 	}
-	return results
+
+	err = rows1.Close()
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	return randomUwu, artistLink
 }
