@@ -42,7 +42,7 @@ jobs:
       # END - Docker auth and build
 
       - name: Print UWU_BOT secret
- run: echo "${{ secrets.UWU_BOT }}"
+        run: echo "${{ secrets.UWU_BOT }}"
 
       - name: Deploy to Cloud Run
         id: deploy
