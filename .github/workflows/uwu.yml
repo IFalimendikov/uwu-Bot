@@ -49,9 +49,9 @@ jobs:
           
       # END - Docker auth and build
 
-      # - name: Deploy to Cloud Run
-      #   id: deploy
-      #   uses: google-github-actions/deploy-cloudrun@v1
-      #   with:
-      #     service: uwu-bot
-      #     image: gcr.io/lucid-inquiry-402409/uwu-bot 
+      - name: Deploy to Cloud Run
+        id: deploy
+        uses: google-github-actions/deploy-cloudrun@v1
+        with:
+          service: uwu-bot
+          image: gcr.io/lucid-inquiry-402409/uwu-bot 
