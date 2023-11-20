@@ -36,9 +36,9 @@ jobs:
         id: docker-auth
         uses: 'docker/login-action@v1'
         with:
-          username: 'oauth2accesstoken'
+          username: _json_key
           password: '${{ secrets.UWU_BOT }}'
-          registry: 'gcr.io'
+          registry: gcr.io
 
       - name: Build and Push Container
         run: |
