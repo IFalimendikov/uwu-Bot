@@ -46,4 +46,4 @@ jobs:
         uses: google-github-actions/deploy-cloudrun@v0
         with:
           service: uwu-bot
-          image: gcr.io/lucid-inquiry-402409/uwu-bot --update-env-vars DISCORD_BOT_TOKEN=TOKEN
+          image: gcr.io/${{ secrets.UWU_BOT_PROJECT_ID }}/uwu-bot --update-env-vars DISCORD_BOT_TOKEN=TOKEN
