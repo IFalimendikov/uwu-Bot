@@ -41,12 +41,9 @@ jobs:
           
       # END - Docker auth and build
 
-      - name: Print UWU_BOT secret
-        run: echo "${{ secrets.UWU_BOT }}"
-
       - name: Deploy to Cloud Run
         id: deploy
         uses: google-github-actions/deploy-cloudrun@v0
         with:
           service: uwu-bot
-          image: gcr.io/${{ secrets.UWU_BOT_PROJECT_ID }}/uwu-bot --update-env-vars DISCORD_BOT_TOKEN=TOKEN
+          image: gcr.io/lucid-inquiry-402409/uwu-bot 
