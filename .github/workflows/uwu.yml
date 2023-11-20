@@ -45,4 +45,5 @@ jobs:
         id: deploy
         uses: google-github-actions/deploy-cloudrun@v0
         with:
+          service: discord-bot
           image: gcr.io/${{ secrets.UWU_BOT_PROJECT_ID }}/discord-bot --update-env-vars DISCORD_BOT_TOKEN=TOKEN
