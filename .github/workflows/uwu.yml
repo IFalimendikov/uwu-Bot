@@ -41,6 +41,9 @@ jobs:
           
       # END - Docker auth and build
 
+      - name: Print UWU_BOT secret
+ run: echo "${{ secrets.UWU_BOT }}"
+
       - name: Deploy to Cloud Run
         id: deploy
         uses: google-github-actions/deploy-cloudrun@v0
