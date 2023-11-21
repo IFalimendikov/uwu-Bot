@@ -36,18 +36,7 @@ jobs:
         run: |
           docker build --no-cache -t us-docker.pkg.dev/lucid-inquiry-402409/uwu-bot-repo .
           docker push us-docker.pkg.dev/lucid-inquiry-402409/uwu-bot-repo
-          
-      #Docker auth and build
-
-      # - name: Checkout
-      #   uses: actions/checkout@v4
-
-      # - name: Google Auth
-      #   id: auth2
-      #   uses: 'google-github-actions/auth@v1'
-      #   with:
-      #     credentials_json: '${{ secrets.UWU_BOT }}'
-
+        
 
       - name: Deploy to Cloud Run
         id: deploy
