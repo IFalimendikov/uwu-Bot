@@ -16,5 +16,5 @@ func port() {
 		port = "8080"
 	}
 
-	http.ListenAndServe(":"+port, nil)
+	log.Fatal(http.ListenAndServe(fmt.Sprintf(":%s", port), nil))
 }
