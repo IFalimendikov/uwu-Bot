@@ -5,6 +5,9 @@ on:
     branches:
       - main
 
+env: 
+  DISCORD_BOT_TOKEN: ${{ secrets.DISCORD_BOT_TOKEN }}
+
 jobs:
   deploy:
     permissions:
