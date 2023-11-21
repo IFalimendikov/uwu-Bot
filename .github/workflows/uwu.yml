@@ -22,7 +22,7 @@ jobs:
         with:
           credentials_json: '${{ secrets.UWU_BOT }}'
 
-      # Authenticate Docker to Google Cloud Artifact Registry.
+      # Authenticate Docker to Google Cloud Artifact Registry
       
       - name: Docker Auth
         id: docker-auth
