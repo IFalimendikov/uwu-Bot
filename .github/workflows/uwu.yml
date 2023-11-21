@@ -34,8 +34,8 @@ jobs:
 
       - name: Build and Push Container
         run: |
-          docker build --no-cache -t us-docker.pkg.dev/lucid-inquiry-402409/uwu-bot-repo .
-          docker push us-docker.pkg.dev/lucid-inquiry-402409/uwu-bot-repo
+          docker build --no-cache -t us-docker.pkg.dev/lucid-inquiry-402409/uwu-bot-repo/uwu-bot .
+          docker push us-docker.pkg.dev/lucid-inquiry-402409/uwu-bot-repo/uwu-bot
         
 
       - name: Deploy to Cloud Run
@@ -43,4 +43,4 @@ jobs:
         uses: google-github-actions/deploy-cloudrun@v1
         with:
           service: uwu-bot
-          image: us-docker.pkg.dev/lucid-inquiry-402409/uwu-bot-repo
+          image: us-docker.pkg.dev/lucid-inquiry-402409/uwu-bot-repo/uwu-bot
