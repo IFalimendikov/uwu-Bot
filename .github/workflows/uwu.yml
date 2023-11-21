@@ -54,4 +54,4 @@ jobs:
         uses: google-github-actions/deploy-cloudrun@v1
         with:
           service: uwu-bot
-          image: europe-west4-docker.pkg.dev/lucid-inquiry-402409/uwu-bot
+          image: us-central1-docker.pkg.dev/lucid-inquiry-402409/cloud-run-source-deploy
