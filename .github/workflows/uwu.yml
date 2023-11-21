@@ -39,14 +39,14 @@ jobs:
           
       #Docker auth and build
 
-      - name: Checkout
-        uses: actions/checkout@v4
+      # - name: Checkout
+      #   uses: actions/checkout@v4
 
-      - name: Google Auth
-        id: auth2
-        uses: 'google-github-actions/auth@v1'
-        with:
-          credentials_json: '${{ secrets.UWU_BOT }}'
+      # - name: Google Auth
+      #   id: auth2
+      #   uses: 'google-github-actions/auth@v1'
+      #   with:
+      #     credentials_json: '${{ secrets.UWU_BOT }}'
 
 
       - name: Deploy to Cloud Run
@@ -54,4 +54,4 @@ jobs:
         uses: google-github-actions/deploy-cloudrun@v1
         with:
           service: uwu-bot
-          image: gcr.io/${{ secrets.UWU_BOT_PROJECT_ID }}/uwu-bot --update-env-vars DISCORD_BOT_TOKEN=TOKEN
+          image: gcr.io/${{ secrets.UWU_BOT_PROJECT_ID }}/uwu-bot
