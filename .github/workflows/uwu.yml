@@ -25,12 +25,12 @@ jobs:
       # Authenticate Docker to Google Cloud Artifact Registry
       
       - name: Docker Auth
-        id: docker-auth
+        id: login to GAR
         uses: 'docker/login-action@v1'
         with:
           username: _json_key
           password: '${{ secrets.UWU_BOT }}'
-          registry: gcr.io
+          registry: us-docker.pkg.dev
 
       - name: Build and Push Container
         run: |
