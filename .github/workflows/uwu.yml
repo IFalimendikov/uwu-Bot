@@ -34,8 +34,8 @@ jobs:
 
       - name: Build and Push Container
         run: |
-          docker build --no-cache -t gcr.io/${{ secrets.UWU_BOT_PROJECT_ID }}/uwu-bot .
-          docker push gcr.io/${{ secrets.UWU_BOT_PROJECT_ID }}/uwu-bot
+          docker build --no-cache -t us-docker.pkg.dev/lucid-inquiry-402409/uwu-bot-repo .
+          docker push us-docker.pkg.dev/lucid-inquiry-402409/uwu-bot-repo
           
       #Docker auth and build
 
@@ -54,4 +54,4 @@ jobs:
         uses: google-github-actions/deploy-cloudrun@v1
         with:
           service: uwu-bot
-          image: gcr.io/${{ secrets.UWU_BOT_PROJECT_ID }}/uwu-bot
+          image: us-docker.pkg.dev/lucid-inquiry-402409/uwu-bot-repo
