@@ -4,10 +4,7 @@ on:
   push:
     branches:
       - main
-
-env: 
-  DISCORD_BOT_TOKEN: ${{ secrets.DISCORD_BOT_TOKEN }}
-
+      
 jobs:
   deploy:
     permissions:
@@ -47,3 +44,4 @@ jobs:
         with:
           service: uwu-bot
           image: us-docker.pkg.dev/lucid-inquiry-402409/uwu-bot-repo/uwu-bot
+          env_vars: DISCORD_BOT_TOKEN=${{ secrets.DISCORD_BOT_TOKEN }}
