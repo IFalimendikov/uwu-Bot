@@ -25,7 +25,7 @@ jobs:
       # Authenticate Docker to Google Cloud Artifact Registry
       
       - name: Docker Auth
-        id: login to GAR
+        id: docker-auth
         uses: 'docker/login-action@v1'
         with:
           username: _json_key
