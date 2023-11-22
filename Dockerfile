@@ -20,5 +20,5 @@ RUN go build -o main .
 # Expose port 8080 to the outside
 EXPOSE 8080
 
-# Command to run the executable
-CMD ["./main"]
+# This command runs your application, represented here as `uwu-bot`
+CMD ["./uwu-bot"]
