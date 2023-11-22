@@ -9,17 +9,12 @@ import (
 	// "math/rand"
 
 	_ "github.com/go-sql-driver/mysql"
-	"github.com/joho/godotenv"
 )
 
 func SqlConnect (id uint64) (string, string) {
 	var randomUwu string
 	var artistLink string
 
-	err := godotenv.Load()
-	if err != nil {
-	  log.Fatal("Error loading .env file")
-	}
 	sqlToken := os.Getenv("SQL_TOKEN")
 
 	db, err := sql.Open("mysql", sqlToken)
