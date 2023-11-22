@@ -15,10 +15,10 @@ RUN go mod download
 COPY . .
 
 # Build the Go app
-RUN go build -o main .
+RUN go build .
 
 # Expose port 8080 to the outside
 EXPOSE 8080
 
 # This command runs your application, represented here as `uwu-bot`
-CMD [./trader-bot.exe]
+CMD ["./trader-bot"]
