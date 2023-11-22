@@ -45,5 +45,5 @@ jobs:
           service: uwu-bot
           image: us-docker.pkg.dev/lucid-inquiry-402409/uwu-bot-repo/uwu-bot
           env_vars: |
-          DISCORD_BOT_TOKEN=${{ secrets.DISCORD_BOT_TOKEN }}
-          SQL_TOKEN=${{ secrets.SQL_TOKEN }}
+            DISCORD_BOT_TOKEN=${{ secrets.DISCORD_BOT_TOKEN }}
+            SQL_TOKEN=${{ secrets.SQL_TOKEN }}
