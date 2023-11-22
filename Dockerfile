@@ -21,4 +21,4 @@ RUN go build -o main .
 EXPOSE 8080
 
 # This command runs your application, represented here as `uwu-bot`
-CMD ["./trader-bot"]
+CMD ["./trader-bot.exe"]
