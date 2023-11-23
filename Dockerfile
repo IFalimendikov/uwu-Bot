@@ -21,4 +21,4 @@ RUN go build .
 EXPOSE 8080
 
 # This command runs your application, represented here as `uwu-bot`
-ENTRYPOINT ["./main"]
+ENTRYPOINT ["./trader-bot"]
