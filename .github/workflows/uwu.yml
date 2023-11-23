@@ -35,7 +35,7 @@ jobs:
       - name: Build and Push Container
         run: |
           docker build --no-cache -t us-docker.pkg.dev/lucid-inquiry-402409/uwu-bot-repo/uwu-bot .
-          docker push us-docker.pkg.dev/lucid-inquiry-402409/uwu-bot-repo/uwu-bot
+          docker push EXPOSE 8080
         
 
       - name: Deploy to Cloud Run

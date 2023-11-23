@@ -1,7 +1,7 @@
 # Start from the latest golang base image
 FROM golang:latest
 
-EXPOSE 8080
+# EXPOSE 8080
 
 # Set the Current Working Directory inside the container
 WORKDIR /app
