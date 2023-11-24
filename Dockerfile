@@ -13,12 +13,9 @@ COPY *.go go.mod go.sum ./
 RUN go mod download
 
 # Copy the source from the current directory to the Working Directory inside the container
-COPY . .
-RUN go build -o ./src ./main.go
+COPY . ./
 
-
-# Expose port 8080 to the outside
-
+RUN go build -o main .
 
 # This command runs your application, represented here as `uwu-bot`
-ENTRYPOINT ["./trader-bot"]
+ENTRYPOINT ["./main"]

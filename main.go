@@ -14,8 +14,6 @@ import (
 func main() {
 
 	token := os.Getenv("DISCORD_BOT_TOKEN")
-
-	port()
 	
 	discordSession, err := discordgo.New(fmt.Sprintf("Bot %s", token))
 	if err != nil {

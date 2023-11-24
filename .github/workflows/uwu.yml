@@ -7,11 +7,8 @@ on:
       
 jobs:
   deploy:
-    permissions:
-      contents: 'read'
-      id-token: 'write'
-
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -21,6 +18,9 @@ jobs:
         uses: 'google-github-actions/auth@v1'
         with:
           credentials_json: '${{ secrets.UWU_BOT }}'
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
 
       # Authenticate Docker to Google Cloud Artifact Registry.
       
@@ -34,16 +34,24 @@ jobs:
 
       - name: Build and Push Container
         run: |
-          docker build --no-cache -t us-docker.pkg.dev/lucid-inquiry-402409/uwu-bot-repo/uwu-bot .
-          docker push EXPOSE 8080
+            docker build --no-cache -t us-docker.pkg.dev/lucid-inquiry-402409/uwu-bot-repo/uwu-bot .
+            docker push us-docker.pkg.dev/lucid-inquiry-402409/uwu-bot-repo/uwu-bot
+          
+
+
+      # - name: Build and push
+      #   uses: docker/build-push-action@v5
+      #   with:
+      #     push: true
+      #     tags: catinkleins/app:latest
         
 
-      - name: Deploy to Cloud Run
-        id: deploy
-        uses: google-github-actions/deploy-cloudrun@v1
-        with:
-          service: uwu-bot
-          image: us-docker.pkg.dev/lucid-inquiry-402409/uwu-bot-repo/uwu-bot
-          env_vars: |
-            DISCORD_BOT_TOKEN=${{ secrets.DISCORD_BOT_TOKEN }}
-            SQL_TOKEN=${{ secrets.SQL_TOKEN }}
+      # - name: Deploy to Cloud Run
+      #   id: deploy
+      #   uses: google-github-actions/deploy-cloudrun@v1
+      #   with:
+      #     service: uwu-bot
+      #     image: us-docker.pkg.dev/lucid-inquiry-402409/uwu-bot-repo/uwu-bot
+      #     env_vars: |
+      #       DISCORD_BOT_TOKEN=${{ secrets.DISCORD_BOT_TOKEN }}
+      #       SQL_TOKEN=${{ secrets.SQL_TOKEN }}

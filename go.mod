@@ -1,4 +1,4 @@
-module github.com/IFalimendikov/trader-bot
+module github.com/IFalimendikov/uwu-bot
 
 go 1.20
 
