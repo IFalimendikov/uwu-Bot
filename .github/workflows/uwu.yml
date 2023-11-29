@@ -43,7 +43,7 @@ jobs:
           docker build --no-cache -t us-central1-docker.pkg.dev/lucid-inquiry-402409/uwu-bot/uwu-bot:latest --build-arg DISCORD_BOT_TOKEN=$DISCORD_BOT_TOKEN --build-arg SQL_TOKEN=$SQL_TOKEN .
           docker push us-central1-docker.pkg.dev/lucid-inquiry-402409/uwu-bot/uwu-bot:latest
       
-      # - name: Reset VM
-      #   if: ${{ success() }}
-      #   run: gcloud compute instances reset test-bot --zone=us-central1-c
+      - name: Reset VM
+        if: ${{ success() }}
+        run: gcloud compute instances reset uwu-bot --zone=us-central1-c
         
