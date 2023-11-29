@@ -56,7 +56,7 @@ func messageCreate(session *discordgo.Session, message * discordgo.MessageCreate
 
 		**I support these commands:**
 		**!uwu:** For the Info and Commands /ᐠ - ˕ -マ🚨
-		**!deriv <your uwu ID> buwu:** For a random derivative of your uwu! ヾ( ˃ᴗ˂ )◞ • *✰
+		**!deriv <your uwu ID>:** For a random derivative of your uwu! ヾ( ˃ᴗ˂ )◞ • *✰
 
 		My creators uwu Labs and Cat always open for any bug reports or suggestions!
 		`))
