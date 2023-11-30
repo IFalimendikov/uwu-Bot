@@ -28,7 +28,7 @@ jobs:
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
 
-      # Authenticate Docker to Google Cloud Artifact Registry
+      # Authenticate Docker to Google Cloud Artifact Registry.
       
       - name: Docker Auth
         id: docker-auth
