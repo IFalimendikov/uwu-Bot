@@ -39,19 +39,28 @@ var (
 
 	commands = []*discordgo.ApplicationCommand {
 		{
-			Name: "basic-command",
+			Name: "warning",
 			// All commands and options must have a description
 			// Commands/options without description will fail the registration
 			// of the command.
-			Description: "Basic command",
+			Description: "Warning from the uwu Bot",
+			Options: []*discordgo.ApplicationCommandOption{
+				{
+					Type: discordgo.ApplicationCommandOptionString,
+					Name: "message",
+					Description: "The message to echo back",
+					Required: true,
+				},
+			},
 		},
 	}
 	commandHandlers = map[string]func(s *discordgo.Session, i *discordgo.InteractionCreate){
-		"basic-command": func(s *discordgo.Session, i *discordgo.InteractionCreate) {
+		"warning": func(s *discordgo.Session, i *discordgo.InteractionCreate) {
+			message := i.ApplicationCommandData().Options[0].StringValue()
 			s.InteractionRespond(i.Interaction, &discordgo.InteractionResponse{
 				Type: discordgo.InteractionResponseChannelMessageWithSource,
 				Data: &discordgo.InteractionResponseData{
-					Content: "Hey there! Congratulations, you just executed your first slash command",
+					Content: message,
 				},
 			})
 		},
