@@ -7,28 +7,86 @@ import (
 	"syscall"
 	"strings"
 	"strconv"
+	"log"
 
 	"github.com/bwmarrin/discordgo"
 )
 
-func main() {
+// Bot parameters
+// var (
+// 	GuildID        = flag.String("guild", "", "Test guild ID. If not passed - bot registers commands globally")
+// 	BotToken       = flag.String("token", "", "Bot access token")
+// 	RemoveCommands = flag.Bool("rmcmd", true, "Remove all commands after shutdowning or not")
+// )
 
+var discordSession *discordgo.Session
+
+func init() {
+	var err error
 	token := os.Getenv("DISCORD_BOT_TOKEN")
 	
-	discordSession, err := discordgo.New(fmt.Sprintf("Bot %s", token))
+	discordSession, err = discordgo.New(fmt.Sprintf("Bot %s", token))
 	if err != nil {
 		fmt.Println("There was a problem with creating a Discord session,", err)
 		return
 	}
+}
+
+var (
+	// integerOptionMinValue          = 1.0
+	// dmPermission                   = false
+	// defaultMemberPermissions int64 = discordgo.PermissionManageServer
+
+	commands = []*discordgo.ApplicationCommand {
+		{
+			Name: "basic-command",
+			// All commands and options must have a description
+			// Commands/options without description will fail the registration
+			// of the command.
+			Description: "Basic command",
+		},
+	}
+	commandHandlers = map[string]func(s *discordgo.Session, i *discordgo.InteractionCreate){
+		"basic-command": func(s *discordgo.Session, i *discordgo.InteractionCreate) {
+			s.InteractionRespond(i.Interaction, &discordgo.InteractionResponse{
+				Type: discordgo.InteractionResponseChannelMessageWithSource,
+				Data: &discordgo.InteractionResponseData{
+					Content: "Hey there! Congratulations, you just executed your first slash command",
+				},
+			})
+		},
+	}
+)
+
+func init() {
+	discordSession.AddHandler(func(s *discordgo.Session, i *discordgo.InteractionCreate) {
+		if h, ok := commandHandlers[i.ApplicationCommandData().Name]; ok {
+			h(s, i)
+		}
+	})
+}
+
+func main() {
 
 	discordSession.AddHandler(messageCreate)
 
 	discordSession.Identify.Intents = discordgo.IntentsGuildMessages
 
-	err = discordSession.Open()
+	err := discordSession.Open()
 	if err != nil {
 		fmt.Println("Error connecting to the websocket", err)
 		return
+	}
+
+	log.Println("Adding commands...")
+
+	registeredCommands := make([]*discordgo.ApplicationCommand, len(commands))
+	for i, v := range commands {
+		cmd, err := discordSession.ApplicationCommandCreate(discordSession.State.User.ID, "", v)
+		if err != nil {
+			log.Panicf("Cannot create '%v' command: %v", v.Name, err)
+		}
+		registeredCommands[i] = cmd
 	}
 
 	fmt.Println("Bot is activated!")
@@ -79,4 +137,6 @@ func messageCreate(session *discordgo.Session, message * discordgo.MessageCreate
 		session.ChannelMessageSend(message.ChannelID, `Showing uwu ` + strings.TrimPrefix(message.Content, "!deriv ") + ` deriv art by `+ artist +` !` )
 		session.ChannelMessageSend(message.ChannelID, uwu)
 	}
+
+
 }
