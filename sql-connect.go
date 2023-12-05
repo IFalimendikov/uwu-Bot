@@ -31,23 +31,22 @@ func SqlConnect(id uint64) (string, string) {
 			panic(err)
 		}
 
-		if rows1.Next() {
-			for rows1.Next() {
-				var column1Value string
-				var column2Value string
-				err := rows1.Scan(&column1Value, &column2Value)
-				if err != nil {
-					panic(err)
-				}
-				randomUwu = column1Value
-				artistLink = column2Value
+		for rows1.Next() {
+			var column1Value string
+			var column2Value string
+			err := rows1.Scan(&column1Value, &column2Value)
+			if err != nil {
+				panic(err)
 			}
+			randomUwu = column1Value
+			artistLink = column2Value
 		}
+		
 		err = rows1.Close()
 		if err != nil {
 			log.Fatal(err)
 		}
-		
+
 	} else {
 		rows1, err := db.Query("SELECT imageLink, socialMedia FROM uwuDerivatives WHERE uwucrewId =  ? ORDER BY RAND()", id)
 		if err != nil {
