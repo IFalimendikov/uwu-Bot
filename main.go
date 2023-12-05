@@ -134,11 +134,18 @@ func messageCreate(session *discordgo.Session, message * discordgo.MessageCreate
 		}
 
 	if strings.HasPrefix(message.Content, "!deriv") {
-		uwuId, err := strconv.ParseUint(strings.TrimPrefix(message.Content, "!deriv "), 10, 64) 
-		if err != nil {
-			fmt.Println("Error:", err)
-			return
-		}
+        uwuIdStr := strings.TrimSpace(strings.TrimPrefix(message.Content, "!deriv"))
+        var uwuId uint64
+        var err error
+        if uwuIdStr == "" {
+            uwuId = 0
+        } else {
+            uwuId, err = strconv.ParseUint(uwuIdStr, 10, 64)
+            if err != nil {
+                fmt.Println("Error:", err)
+                return
+            }
+        }
 
 		uwu, artist := SqlConnect(uwuId)
 
