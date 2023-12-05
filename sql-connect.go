@@ -26,7 +26,7 @@ func SqlConnect(id uint64) (string, string) {
 	db.SetMaxIdleConns(10)
 
 	if id == 0 {
-		rows1, err := db.Query("SELECT imageLink, socialMedia FROM uwuDerivatives ORDER BY RAND()")
+		rows1, err := db.Query("SELECT imageLink, socialMedia FROM uwuDerivatives ORDER BY RAND() LIMIT 1")
 		if err != nil {
 			panic(err)
 		}
