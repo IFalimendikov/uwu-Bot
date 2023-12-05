@@ -57,10 +57,14 @@ var (
 	commandHandlers = map[string]func(s *discordgo.Session, i *discordgo.InteractionCreate){
 		"warning": func(s *discordgo.Session, i *discordgo.InteractionCreate) {
 			message := i.ApplicationCommandData().Options[0].StringValue()
+			embed := &discordgo.MessageEmbed{
+				Description: message,
+				Color:       0x00ff00, // Set the color to green
+			}
 			s.InteractionRespond(i.Interaction, &discordgo.InteractionResponse{
 				Type: discordgo.InteractionResponseChannelMessageWithSource,
 				Data: &discordgo.InteractionResponseData{
-					Content: message,
+					Embeds: []*discordgo.MessageEmbed{embed},
 				},
 			})
 		},
