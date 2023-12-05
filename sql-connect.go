@@ -46,13 +46,6 @@ func SqlConnect (id uint64) (string, string) {
 				artistLink = column2Value
 			}
 		}
-		err = rows1.Close()
-		if err != nil {
-			log.Fatal(err)
-		}
-
-		return randomUwu, artistLink
-		
 	}
 
 	rows1, err := db.Query("SELECT imageLink, socialMedia FROM uwuDerivatives WHERE uwucrewId =  ? ORDER BY RAND()", id)
