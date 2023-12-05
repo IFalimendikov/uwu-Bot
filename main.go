@@ -155,6 +155,7 @@ func messageCreate(session *discordgo.Session, message * discordgo.MessageCreate
 		} else if uwuId == 0 {
 			session.ChannelMessageSend(message.ChannelID, `Showing uwu deriv art by `+ artist +` !` )
 			session.ChannelMessageSend(message.ChannelID, uwu)
+			return
 		}
 
 		session.ChannelMessageSend(message.ChannelID, `Showing uwu ` + strings.TrimPrefix(message.Content, "!deriv ") + ` deriv art by `+ artist +` !` )
