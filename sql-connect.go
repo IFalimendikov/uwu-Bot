@@ -1,17 +1,16 @@
 package main
 
 import (
-
-	"log"
 	"database/sql"
-	"time"
+	"log"
 	"os"
+	"time"
 	// "math/rand"
 
 	_ "github.com/go-sql-driver/mysql"
 )
 
-func SqlConnect (id uint64) (string, string) {
+func SqlConnect(id uint64) (string, string) {
 	var randomUwu string
 	var artistLink string
 
@@ -26,14 +25,12 @@ func SqlConnect (id uint64) (string, string) {
 	db.SetMaxOpenConns(10)
 	db.SetMaxIdleConns(10)
 
-
-
 	if id == 0 {
 		rows1, err := db.Query("SELECT imageLink, socialMedia FROM uwuDerivatives ORDER BY RAND()")
 		if err != nil {
 			panic(err)
 		}
-	
+
 		if rows1.Next() {
 			for rows1.Next() {
 				var column1Value string
@@ -46,53 +43,58 @@ func SqlConnect (id uint64) (string, string) {
 				artistLink = column2Value
 			}
 		}
-	}
-
-	rows1, err := db.Query("SELECT imageLink, socialMedia FROM uwuDerivatives WHERE uwucrewId =  ? ORDER BY RAND()", id)
-	if err != nil {
-		panic(err)
-	}
-
-	if rows1.Next() {
-		for rows1.Next() {
-			var column1Value string
-			var column2Value string
-			err := rows1.Scan(&column1Value, &column2Value)
-			if err != nil {
-				panic(err)
-			}
-			randomUwu = column1Value
-			artistLink = column2Value
+		err = rows1.Close()
+		if err != nil {
+			log.Fatal(err)
+		}
+		
+	} else {
+		rows1, err := db.Query("SELECT imageLink, socialMedia FROM uwuDerivatives WHERE uwucrewId =  ? ORDER BY RAND()", id)
+		if err != nil {
+			panic(err)
 		}
 
-		// rand.Seed(time.Now().UnixNano())	
+		if rows1.Next() {
+			for rows1.Next() {
+				var column1Value string
+				var column2Value string
+				err := rows1.Scan(&column1Value, &column2Value)
+				if err != nil {
+					panic(err)
+				}
+				randomUwu = column1Value
+				artistLink = column2Value
+			}
 
-		// randomIndex := rand.Intn(len(results))
-		// randomUwuPic := results[randomIndex]
+			// rand.Seed(time.Now().UnixNano())
 
-		// rows2, err := db.Query("SELECT socialMedia FROM uwuDerivatives WHERE imageLink = ?", randomUwuPic)
-		// if err != nil {
-		// 	panic(err)
-		// }
+			// randomIndex := rand.Intn(len(results))
+			// randomUwuPic := results[randomIndex]
 
-		// artist = rows 
+			// rows2, err := db.Query("SELECT socialMedia FROM uwuDerivatives WHERE imageLink = ?", randomUwuPic)
+			// if err != nil {
+			// 	panic(err)
+			// }
 
-		// for rows2.Next() {
-		// 	var column2Value string
-		// 	err := rows1.Scan(&column2Value)
-		// 	if err != nil {
-		// 		panic(err)
-		// 	}
-		// 	results = append(results, column2Value)
-		// }
+			// artist = rows
 
-	} else {
-		randomUwu = "no ID found"
-	}
+			// for rows2.Next() {
+			// 	var column2Value string
+			// 	err := rows1.Scan(&column2Value)
+			// 	if err != nil {
+			// 		panic(err)
+			// 	}
+			// 	results = append(results, column2Value)
+			// }
 
-	err = rows1.Close()
-	if err != nil {
-		log.Fatal(err)
+		} else {
+			randomUwu = "no ID found"
+		}
+
+		err = rows1.Close()
+		if err != nil {
+			log.Fatal(err)
+		}
 	}
 
 	return randomUwu, artistLink
