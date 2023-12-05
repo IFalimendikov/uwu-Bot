@@ -145,6 +145,11 @@ func messageCreate(session *discordgo.Session, message * discordgo.MessageCreate
                 fmt.Println("Error:", err)
                 return
             }
+
+			if uwuId <= 0 || uwuId > 9669 {
+				session.ChannelMessageSend(message.ChannelID, "Incorrect uwu ID!  ( ^ ᴖ ^ )")
+				return
+			}
         }
 
 		uwu, artist := SqlConnect(uwuId)
