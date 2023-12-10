@@ -5,6 +5,7 @@ import (
 	"log"
 	"os"
 	"time"
+	"strings"
 	// "math/rand"
 
 	_ "github.com/go-sql-driver/mysql"
@@ -63,6 +64,10 @@ func SqlConnect(id uint64) (string, string) {
 				}
 				randomUwu = column1Value
 				artistLink = column2Value
+
+				if !strings.HasPrefix(artistLink, "https://") {
+					artistLink = "https://" + artistLink
+				}
 			}
 
 			// rand.Seed(time.Now().UnixNano())
