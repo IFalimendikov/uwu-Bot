@@ -152,7 +152,7 @@ func messageCreate(session *discordgo.Session, message * discordgo.MessageCreate
 			}
         }
 
-		uwu, artist := SqlConnect(uwuId)
+		uwu, artist, rId := SqlConnect(uwuId)
 
 		if uwu == "no ID found" {
 			session.ChannelMessageSend(message.ChannelID, "This uwu has no derivatives yet!  ( • ᴖ • ｡)")
@@ -163,7 +163,7 @@ func messageCreate(session *discordgo.Session, message * discordgo.MessageCreate
 			return
 		}
 
-		session.ChannelMessageSend(message.ChannelID, `Showing uwu ` + strings.TrimPrefix(message.Content, "!deriv ") + ` deriv art by `+ artist +` !` )
+		session.ChannelMessageSend(message.ChannelID, `Showing uwu ` + strconv.Itoa(rId) + ` deriv art by `+ artist +` !` )
 		session.ChannelMessageSend(message.ChannelID, uwu)
 	}
 

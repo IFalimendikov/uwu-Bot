@@ -11,9 +11,10 @@ import (
 	_ "github.com/go-sql-driver/mysql"
 )
 
-func SqlConnect(id uint64) (string, string) {
+func SqlConnect(id uint64) (string, string, int) {
 	var randomUwu string
 	var artistLink string
+	var returnedId int
 
 	sqlToken := os.Getenv("SQL_TOKEN")
 
@@ -27,7 +28,7 @@ func SqlConnect(id uint64) (string, string) {
 	db.SetMaxIdleConns(10)
 
 	if id == 0 {
-		rows1, err := db.Query("SELECT imageLink, socialMedia FROM uwuDerivatives ORDER BY RAND() LIMIT 1")
+		rows1, err := db.Query("SELECT imageLink, socialMedia, uwucrewId FROM uwuDerivatives ORDER BY RAND() LIMIT 1")
 		if err != nil {
 			panic(err)
 		}
@@ -35,12 +36,18 @@ func SqlConnect(id uint64) (string, string) {
 		for rows1.Next() {
 			var column1Value string
 			var column2Value string
-			err := rows1.Scan(&column1Value, &column2Value)
+			var column3Value int
+			err := rows1.Scan(&column1Value, &column2Value, &column3Value)
 			if err != nil {
 				panic(err)
 			}
 			randomUwu = column1Value
 			artistLink = column2Value
+			returnedId = column3Value
+
+			if !strings.HasPrefix(artistLink, "https://") {
+				artistLink = "https://" + artistLink
+			}
 		}
 		
 		err = rows1.Close()
@@ -49,7 +56,7 @@ func SqlConnect(id uint64) (string, string) {
 		}
 
 	} else {
-		rows1, err := db.Query("SELECT imageLink, socialMedia FROM uwuDerivatives WHERE uwucrewId =  ? ORDER BY RAND()", id)
+		rows1, err := db.Query("SELECT imageLink, socialMedia, uwucrewId FROM uwuDerivatives WHERE uwucrewId =  ? ORDER BY RAND()", id)
 		if err != nil {
 			panic(err)
 		}
@@ -58,12 +65,14 @@ func SqlConnect(id uint64) (string, string) {
 			for rows1.Next() {
 				var column1Value string
 				var column2Value string
-				err := rows1.Scan(&column1Value, &column2Value)
+				var column3Value int
+				err := rows1.Scan(&column1Value, &column2Value, &column3Value)
 				if err != nil {
 					panic(err)
 				}
 				randomUwu = column1Value
 				artistLink = column2Value
+				returnedId = column3Value
 
 				if !strings.HasPrefix(artistLink, "https://") {
 					artistLink = "https://" + artistLink
@@ -101,5 +110,5 @@ func SqlConnect(id uint64) (string, string) {
 		}
 	}
 
-	return randomUwu, artistLink
+	return randomUwu, artistLink, returnedId
 }
