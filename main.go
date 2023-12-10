@@ -163,7 +163,7 @@ func messageCreate(session *discordgo.Session, message * discordgo.MessageCreate
 			return
 		}
 
-		session.ChannelMessageSend(message.ChannelID, `Showing uwu ` + strconv.Itoa(rId) + ` deriv art by `+ artist +` !` )
+		session.ChannelMessageSend(message.ChannelID, `Showing uwu ` + rId + ` deriv art by `+ artist +` !` )
 		session.ChannelMessageSend(message.ChannelID, uwu)
 	}
 

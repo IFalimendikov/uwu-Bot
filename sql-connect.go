@@ -11,10 +11,10 @@ import (
 	_ "github.com/go-sql-driver/mysql"
 )
 
-func SqlConnect(id uint64) (string, string, int) {
+func SqlConnect(id uint64) (string, string, string) {
 	var randomUwu string
 	var artistLink string
-	var returnedId int
+	var returnedId string
 
 	sqlToken := os.Getenv("SQL_TOKEN")
 
@@ -36,7 +36,7 @@ func SqlConnect(id uint64) (string, string, int) {
 		for rows1.Next() {
 			var column1Value string
 			var column2Value string
-			var column3Value int
+			var column3Value string
 			err := rows1.Scan(&column1Value, &column2Value, &column3Value)
 			if err != nil {
 				panic(err)
@@ -65,7 +65,7 @@ func SqlConnect(id uint64) (string, string, int) {
 			for rows1.Next() {
 				var column1Value string
 				var column2Value string
-				var column3Value int
+				var column3Value string
 				err := rows1.Scan(&column1Value, &column2Value, &column3Value)
 				if err != nil {
 					panic(err)
