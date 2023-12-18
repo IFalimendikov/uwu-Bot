@@ -137,7 +137,7 @@ func messageCreate(session *discordgo.Session, message * discordgo.MessageCreate
 
 		My creators uwu Labs and Cat always open for any bug reports or suggestions!
 		`))
-		}
+	}
 
 	if strings.HasPrefix(message.Content, "!deriv") {
         uwuIdStr := strings.TrimSpace(strings.TrimPrefix(message.Content, "!deriv"))
