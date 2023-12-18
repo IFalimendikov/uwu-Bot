@@ -121,6 +121,12 @@ func messageCreate(session *discordgo.Session, message * discordgo.MessageCreate
 		return
 	}
 
+	if strings.HasPrefix(message.Content, "!warn") {
+		echoMessage := strings.TrimSpace(strings.TrimPrefix(message.Content, "!warn"))
+		session.ChannelMessageSend(message.ChannelID, echoMessage)
+		session.ChannelMessageDelete(message.ChannelID, message.ID)
+	}
+
 	if message.Content == "!uwu" {
 		session.ChannelMessageSend(message.ChannelID, fmt.Sprintf(`
 		**Hi, I'm the uwu Bot!**
