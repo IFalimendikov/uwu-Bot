@@ -11,6 +11,42 @@ import (
 	_ "github.com/go-sql-driver/mysql"
 )
 
+func PostAll() []string {
+	var imageLinks []string
+ 
+	sqlToken := os.Getenv("SQL_TOKEN")
+ 
+	db, err := sql.Open("mysql", sqlToken)
+	if err != nil {
+		panic(err)
+	}
+ 
+	db.SetConnMaxLifetime(time.Minute * 3)
+	db.SetMaxOpenConns(10)
+	db.SetMaxIdleConns(10)
+ 
+	rows, err := db.Query("SELECT imageLink FROM uwuDerivatives")
+	if err != nil {
+		panic(err)
+	}
+ 
+	for rows.Next() {
+		var imageLink string
+		err := rows.Scan(&imageLink)
+		if err != nil {
+			panic(err)
+		}
+		imageLinks = append(imageLinks, imageLink)
+	}
+ 
+	err = rows.Close()
+	if err != nil {
+		log.Fatal(err)
+	}
+ 
+	return imageLinks
+}
+
 func SqlConnect(id uint64) (string, string, string) {
 	var randomUwu string
 	var artistLink string

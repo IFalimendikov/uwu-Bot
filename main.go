@@ -139,6 +139,14 @@ func messageCreate(session *discordgo.Session, message * discordgo.MessageCreate
 		`))
 	}
 
+	if strings.HasPrefix(message.Content, "!all") {
+		imageLinks := PostAll()
+	 
+		for _, link := range imageLinks {
+			session.ChannelMessageSend(message.ChannelID, link)
+		}
+	 }
+
 	if strings.HasPrefix(message.Content, "!deriv") {
         uwuIdStr := strings.TrimSpace(strings.TrimPrefix(message.Content, "!deriv"))
         var uwuId uint64
