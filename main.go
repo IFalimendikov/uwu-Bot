@@ -140,9 +140,13 @@ func messageCreate(session *discordgo.Session, message * discordgo.MessageCreate
 	}
 
 	if strings.HasPrefix(message.Content, "!all") {
-		_ = PostAll()
-
-	 }
+		brokenLinks := PostAll()
+		if len(brokenLinks) > 0 {
+			session.ChannelMessageSend(message.ChannelID, "Broken links: "+strings.Join(brokenLinks, ", "))
+		} else {
+			session.ChannelMessageSend(message.ChannelID, "No broken links found.")
+		}
+	  }
 
 	if strings.HasPrefix(message.Content, "!deriv") {
         uwuIdStr := strings.TrimSpace(strings.TrimPrefix(message.Content, "!deriv"))
