@@ -138,15 +138,21 @@ func messageCreate(session *discordgo.Session, message * discordgo.MessageCreate
 		My creators uwu Labs and Cat always open for any bug reports or suggestions!
 		`))
 	}
-
+	
 	if strings.HasPrefix(message.Content, "!all") {
 		brokenLinks := PostAll()
 		if len(brokenLinks) > 0 {
-			session.ChannelMessageSend(message.ChannelID, "Broken links: "+strings.Join(brokenLinks, ", "))
+			for i := 0; i < len(brokenLinks); i += 3 {
+				end := i + 3
+				if end > len(brokenLinks) {
+					end = len(brokenLinks)
+				}
+				session.ChannelMessageSend(message.ChannelID, "Broken links: "+strings.Join(brokenLinks[i:end], ", "))
+			}
 		} else {
 			session.ChannelMessageSend(message.ChannelID, "No broken links found.")
 		}
-	  }
+	   }
 
 	if strings.HasPrefix(message.Content, "!deriv") {
         uwuIdStr := strings.TrimSpace(strings.TrimPrefix(message.Content, "!deriv"))
