@@ -6,6 +6,7 @@ import (
 	"os"
 	"time"
 	"strings"
+	"net/http"
 	// "math/rand"
 
 	_ "github.com/go-sql-driver/mysql"
@@ -13,23 +14,20 @@ import (
 
 func PostAll() []string {
 	var imageLinks []string
- 
+	var brokenLinks []string
+   
 	sqlToken := os.Getenv("SQL_TOKEN")
- 
+   
 	db, err := sql.Open("mysql", sqlToken)
 	if err != nil {
 		panic(err)
 	}
- 
-	db.SetConnMaxLifetime(time.Minute * 3)
-	db.SetMaxOpenConns(10)
-	db.SetMaxIdleConns(10)
- 
+   
 	rows, err := db.Query("SELECT imageLink FROM uwuDerivatives")
 	if err != nil {
 		panic(err)
 	}
- 
+   
 	for rows.Next() {
 		var imageLink string
 		err := rows.Scan(&imageLink)
@@ -38,12 +36,33 @@ func PostAll() []string {
 		}
 		imageLinks = append(imageLinks, imageLink)
 	}
- 
+   
 	err = rows.Close()
+	if err != nil {
+		panic(err)
+	}
+   
+	for _, imageLink := range imageLinks {
+		resp, err := http.Get(imageLink)
+		if err != nil || resp.StatusCode != http.StatusOK {
+			brokenLinks = append(brokenLinks, imageLink)
+		}
+	}
+   
+	// Write broken links to a text file
+	f, err := os.Create("uwu-bot/broken_links.txt")
 	if err != nil {
 		log.Fatal(err)
 	}
- 
+	defer f.Close()
+   
+	for _, link := range brokenLinks {
+		_, err := f.WriteString(link + "\n")
+		if err != nil {
+			log.Fatal(err)
+		}
+	}
+   
 	return imageLinks
 }
 
